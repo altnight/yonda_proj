@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}timeline{% endblock %}
+{% block content %}
+<ul>
+  {% for obj in timeline.all %}
+    <li>{{ obj.title }}</li>
+    <li>{{ obj.url }}</li>
+    <hr />
+  {% endfor %}
+</ul>
+{% endblock %}

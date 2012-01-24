@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 from yonda.forms import *
 from yonda.models import *
 
+from BeautifulSoup import BeautifulSoup
+import urllib2
+
 def index(request):
     #loginしてるとき
     if request.method == "GET":
@@ -17,7 +20,16 @@ def index(request):
         form = UrlPostForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        url_instance = Url(url=form.cleaned_data["url"])
+        
+        url = form.cleaned_data["url"]
+        html = urllib2.urlopen(url).read()
+        soup = BeautifulSoup(html)
+        for s in soup('title'):
+            a = s.renderContents()
+        decoded = a.decode("utf-8")
+        url_instance = Url(url=form.cleaned_data["url"],
+                           title=decoded,
+                           )
         url_instance.save()
         return HttpResponseRedirect(reverse('index'))
 
@@ -54,3 +66,7 @@ def logout(request):
     if request.session.get('session_user'):
         del request.session['session_user']
     return HttpResponseRedirect(reverse('index'))
+
+def timeline(request):
+    timeline = Url.objects.all().order_by('-ctime')
+    return direct_to_template(request, "timeline.html",{'timeline':timeline})
