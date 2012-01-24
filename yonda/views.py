@@ -3,7 +3,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic.simple import direct_to_template
-from django.shortcuts import get_object_or_404
+#from django.shortcuts import get_object_or_404
 #from django.core.mail import send_mail
 
 from yonda.forms import *
@@ -20,17 +20,32 @@ def index(request):
         form = UrlPostForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        
+        #import pdb;pdb.set_trace()
         url = form.cleaned_data["url"]
-        html = urllib2.urlopen(url).read()
-        soup = BeautifulSoup(html)
-        for s in soup('title'):
-            a = s.renderContents()
-        decoded = a.decode("utf-8")
-        url_instance = Url(url=form.cleaned_data["url"],
-                           title=decoded,
-                           )
-        url_instance.save()
+        if "#!/" in url:
+            url = url.replace("#!/","")
+        #try:
+        #    posted_user = User.objects.get(name=request.session["session_user"])
+        #except:
+        #    #TODO:増田
+        #    posted_user = User.objects.get(pk=2)
+        try:
+            posted_user = request.session["session_user"]
+        except:
+            posted_user = "増田"
+        try:
+            html = urllib2.urlopen(url).read()
+            soup = BeautifulSoup(html)
+            for s in soup('title'):
+                souped_title = s.renderContents()
+            decoded_title = souped_title.decode("utf-8")
+            url_instance = Url(url=form.cleaned_data["url"],
+                               title=decoded_title,
+                               user=posted_user
+                               )
+            url_instance.save()
+        except:
+            print 'error'
         return HttpResponseRedirect(reverse('index'))
 
 def signup(request):

@@ -4,7 +4,8 @@
 <ul>
   {% for obj in timeline.all %}
     <li>{{ obj.title }}</li>
-    <li>{{ obj.url }}</li>
+    <li>{{ obj.url|urlize }}</li>
+    <li>{{ obj.user }}</li>
     <hr />
   {% endfor %}
 </ul>
