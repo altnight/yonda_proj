@@ -21,18 +21,20 @@ def index(request):
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
         #import pdb;pdb.set_trace()
+        
         url = form.cleaned_data["url"]
         if "#!/" in url:
             url = url.replace("#!/","")
+        try:
+            posted_user = User.objects.get(name=request.session["session_user"])
+        except:
+            #TODO:増田
+            posted_user = User.objects.get(pk=1)
         #try:
-        #    posted_user = User.objects.get(name=request.session["session_user"])
+        #    posted_user = request.session["session_user"]
         #except:
         #    #TODO:増田
-        #    posted_user = User.objects.get(pk=2)
-        try:
-            posted_user = request.session["session_user"]
-        except:
-            posted_user = "増田"
+        #    posted_user = "増田"
         try:
             html = urllib2.urlopen(url).read()
             soup = BeautifulSoup(html)
