@@ -1,0 +1,31 @@
+
+<head>
+<html lang="ja">
+<title>{% block title %}{% endblock %}</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+<div id="all">
+  {% block header %}
+    <div id='header'>
+      <h1>yonda</h1>
+    </div>
+    <div>
+      <ul>
+    	  <li> {{ display_user.name }}</li>
+      	<li><a href="{% url signup %}">会員登録</a></li>
+      	<li><a href="{% url login %}">login</a></li>
+      	<li><a href="{% url logout %}">logout</a></li>
+      </ul>
+    </div>
+  {% endblock %}
+    <div id="main">
+  {% block content %}{% endblock %}
+    </div>
+  {% block hooter%}
+  <div id='footer'>
+    アハーン
+  </div>
+  {% endblock %}
+</div>
+</body>

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}会員登録{% endblock %}
+{% block content %}
+  <form name='login' method="POST" action="">
+    {% csrf_token %}
+    {{ form }}
+    <input type="SUBMIT" value='ログイン'/>
+  </form>
+{% endblock %}

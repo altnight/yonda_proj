@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}index{% endblock %}
+{% block content %}
+  <h2>読んだ</h2>
+  <form name="yonda" method="POST" action="">
+  {{form}}
+  {% csrf_token %}
+  <input type="SUBMIT" value="送信"/>
+  </form>
+  <!--{{content}}-->
+{% endblock %}
