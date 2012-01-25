@@ -109,9 +109,12 @@ def bookmarklet(request):
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
-        #session_user = User.objects.get(name=request.session.get('session_user'))
-        url_instance= Bookmark(title=form.cleaned_data['title'],
-                                user=form.cleaned_data["user"],
+        try:
+            user = User.objects.get(name=request.session["session_user"])
+        except:
+            user = User.objects.get(pk=1)
+        url_instance= Url(title=form.cleaned_data['title'],
+                                user=user,
                                 url=form.cleaned_data['url'],
                                )
         url_instance.save()
