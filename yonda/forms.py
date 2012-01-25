@@ -1,3 +1,4 @@
+#-*- encoding: utf-8 -*-
 from django.forms import ModelForm
 from django import forms
 
@@ -8,10 +9,10 @@ class UrlPostForm(forms.ModelForm):
         model = Url
         fields = ('url',)
 
-class SingupFrom(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('name','email')
+#class SingupFrom(forms.ModelForm):
+#    class Meta:
+#        model = User
+#        fields = ('name','email')
 
 class LoginForm(forms.ModelForm):
     class Meta:

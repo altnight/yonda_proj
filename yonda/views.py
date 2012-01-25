@@ -50,21 +50,21 @@ def index(request):
             print 'error'
         return HttpResponseRedirect(reverse('index'))
 
-def signup(request):
-    if request.method == "GET":
-        return direct_to_template(request, 'signup.html',{'form':SingupFrom()})
-    if request.method == "POST":
-        form = SingupFrom(request.POST)
-        if not form.is_valid():
-            return HttpResponseRedirect(reverse('index'))
-        #存在しないユーザーならindexに戻す
-        #if not User.objects.filter(name=request.POST.get('name')).count():
-        #    return HttpResponseRedirect(reverse('index'))
-        new_user = User(name=form.cleaned_data["name"], 
-                        email=form.cleaned_data["email"])
-        new_user.save()
-        request.session['session_user'] = request.POST.get('name')
-        return HttpResponseRedirect(reverse('index'))
+#def signup(request):
+#    if request.method == "GET":
+#        return direct_to_template(request, 'signup.html',{'form':SingupFrom()})
+#    if request.method == "POST":
+#        form = SingupFrom(request.POST)
+#        if not form.is_valid():
+#            return HttpResponseRedirect(reverse('index'))
+#        #存在しないユーザーならindexに戻す
+#        #if not User.objects.filter(name=request.POST.get('name')).count():
+#        #    return HttpResponseRedirect(reverse('index'))
+#        new_user = User(name=form.cleaned_data["name"], 
+#                        email=form.cleaned_data["email"])
+#        new_user.save()
+#        request.session['session_user'] = request.POST.get('name')
+#        return HttpResponseRedirect(reverse('index'))
 
 def login(request):
     if request.method == "GET":
@@ -73,9 +73,9 @@ def login(request):
         form = LoginForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        #存在しないユーザーならindexに戻す
         if not User.objects.filter(name=request.POST.get('name')).count():
-            return HttpResponseRedirect(reverse('index'))
+            new_user = User(name=form.cleaned_data["name"])
+            new_user.save()
         request.session['session_user'] = request.POST.get('name')
         return HttpResponseRedirect(reverse('index'))
 

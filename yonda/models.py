@@ -5,11 +5,7 @@ from django.db import models
 
 class User(models.Model):
     name = models.CharField(u"名前", max_length=255)
-    email = models.CharField(u"email", max_length=255)
-    password = models.CharField(max_length=255)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
-    atime = models.DateTimeField(u'更新日時',auto_now=True, editable=False)
-    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name
@@ -23,7 +19,6 @@ class Url(models.Model):
     user = models.ForeignKey(User, verbose_name=u'ユーザー')
     #user = models.CharField(u"ユーザー", max_length=255, editable=False)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
-    atime = models.DateTimeField(u'更新日時',auto_now=True, editable=False)
     #yonda = models.IntegerField(u"読んだ", default=0)
 
     def __unicode__(self):

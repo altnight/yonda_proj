@@ -8,16 +8,17 @@
 <div id="all">
   {% block header %}
     <div id='header'>
-      <h1>yonda</h1>
+      <h1>Yonda?</h1>
+      <p> FavでもLikeでもない、ただ単に読了したものを記録するサービスです</p>
     </div>
     <div>
       <ul>
-    	  <li> {{ display_user.name }}</li>
+    	  {% if display_user %}<li> {{ display_user.name }}で登録する</li>{% endif %}
+    	  {% if not display_user %}<li>匿名で登録する</li>{% endif %}
       	<li><a href="{% url index %}">index</a></li>
-      	<li><a href="{% url signup %}">会員登録</a></li>
-      	<li><a href="{% url login %}">login</a></li>
-      	<li><a href="{% url logout %}">logout</a></li>
-      	<li><a href="{% url timeline %}">timeline</a></li>
+      	<li><a href="{% url login %}">名前で登録する</a></li>
+      	<li><a href="{% url logout %}">匿名に戻る</a></li>
+      	<li><a href="{% url timeline %}">public_timeline</a></li>
       </ul>
     </div>
   {% endblock %}
@@ -26,7 +27,7 @@
     </div>
   {% block hooter%}
   <div id='footer'>
-    アハーン
+    つくったひと::<a href="http://twitter.com/altnight">@altnight</a>
   </div>
   {% endblock %}
 </div>

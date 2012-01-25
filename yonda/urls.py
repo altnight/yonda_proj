@@ -6,7 +6,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('yonda.views',
     url(r'^$', 'index', name='index'),
-    url(r'^signup$', 'signup', name='signup'),
+    #url(r'^signup$', 'signup', name='signup'),
     url(r'^login$', 'login', name='login'),
     url(r'^logout$', 'logout', name='logout'),
     url(r'^timeline$', 'timeline', name='timeline'),
