@@ -13,7 +13,7 @@
     </div>
     <div>
       <ul>
-    	  {% if display_user %}<li> {{ display_user.name }}で登録する</li>{% endif %}
+    	  {% if display_user %}<li><a href="http://127.0.0.1:8000/user/{{ display_user.name }}"> {{ display_user.name }}</a>で登録する</li>{% endif %}
     	  {% if not display_user %}<li>匿名で登録する</li>{% endif %}
       	<li><a href="{% url index %}">index</a></li>
       	<li><a href="{% url login %}">名前で登録する</a></li>
