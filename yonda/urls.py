@@ -10,5 +10,6 @@ urlpatterns = patterns('yonda.views',
     url(r'^login$', 'login', name='login'),
     url(r'^logout$', 'logout', name='logout'),
     url(r'^timeline$', 'timeline', name='timeline'),
+    url(r'^user/(?P<username>.*)$', "user_timeline", name="user_timeline"),
 )
 

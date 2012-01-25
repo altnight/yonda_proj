@@ -87,3 +87,8 @@ def logout(request):
 def timeline(request):
     timeline = Url.objects.all().order_by('-ctime')
     return direct_to_template(request, "timeline.html",{'timeline':timeline})
+
+def user_timeline(request, username):
+    user = User.objects.get(name=username)
+    user_timeline = Url.objects.filter(user=user).order_by('-ctime')
+    return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
