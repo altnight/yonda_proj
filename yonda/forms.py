@@ -9,6 +9,11 @@ class UrlPostForm(forms.ModelForm):
         model = Url
         fields = ('url',)
 
+class BookmalkletForm(forms.Form):
+    title = forms.CharField(label=u"タイトル", required=True)
+    url = forms.CharField(label=u"url", required=True, initial="http://")
+    user= forms.CharField(label=u"名前", required=True, initial="増田")
+
 #class SingupFrom(forms.ModelForm):
 #    class Meta:
 #        model = User

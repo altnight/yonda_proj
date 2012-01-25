@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}ブックマークレットで追加{% endblock %}
+{% block content %}
+  <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_ul }}
+  <input type="SUBMIT" value='追加'/>
+  </form>
+{% endblock %}

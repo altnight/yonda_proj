@@ -92,3 +92,27 @@ def user_timeline(request, username):
     user = User.objects.get(name=username)
     user_timeline = Url.objects.filter(user=user).order_by('-ctime')
     return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
+
+def bookmarklet(request):
+    if request.method == "GET":
+        #クエリからtitleとurlをとってくる
+        title = request.GET.get('title')
+        url = request.GET.get('url')
+        try:
+            user = request.session["session_user"]
+        except:
+            user = User.objects.get(pk=1)
+        #bookmarkletなのでinitialをつける
+        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url, 'user':user}) })
+    #POSTの処理はbookmark_addと同じ
+    if request.method == "POST":
+        form = BookmalkletForm(request.POST)
+        if not form.is_valid():
+            return HttpResponseRedirect(reverse('bookmarklet'))
+        #session_user = User.objects.get(name=request.session.get('session_user'))
+        url_instance= Bookmark(title=form.cleaned_data['title'],
+                                user=form.cleaned_data["user"],
+                                url=form.cleaned_data['url'],
+                               )
+        url_instance.save()
+        return HttpResponseRedirect(reverse('index'))
