@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}timeline{% endblock %}
+{% block title %}user_timeline{% endblock %}
 {% block content %}
 <ul>
-  {% for obj in timeline.all %}
+  {% for obj in user_timeline.all %}
     <li>{{ obj.title }}</li>
     <li>{{ obj.url|urlize }}</li>
     <li> <a href="http://127.0.0.1:8000/user/{{ obj.user }}">{{ obj.user }}</a></li>
