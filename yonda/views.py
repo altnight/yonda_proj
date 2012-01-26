@@ -25,16 +25,16 @@ def index(request):
         url = form.cleaned_data["url"]
         if "#!/" in url:
             url = url.replace("#!/","")
-        try:
-            posted_user = User.objects.get(name=request.session["session_user"])
-        except:
-            #TODO:増田
-            posted_user = User.objects.get(pk=1)
         #try:
-        #    posted_user = request.session["session_user"]
+        #    posted_user = User.objects.get(name=request.session["session_user"])
         #except:
         #    #TODO:増田
-        #    posted_user = "増田"
+        #    posted_user = User.objects.get(pk=1)
+        try:
+            posted_user = request.session["session_user"]
+        except:
+            #TODO:増田
+            posted_user = "増田"
         try:
             html = urllib2.urlopen(url).read()
             soup = BeautifulSoup(html)
@@ -89,8 +89,8 @@ def timeline(request):
     return direct_to_template(request, "timeline.html",{'timeline':timeline})
 
 def user_timeline(request, username):
-    user = User.objects.get(name=username)
-    user_timeline = Url.objects.filter(user=user).order_by('-ctime')
+    #user = User.objects.get(name=username)
+    user_timeline = Url.objects.filter(user=username).order_by('-ctime')
     return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
 
 def bookmarklet(request):
@@ -98,23 +98,34 @@ def bookmarklet(request):
         #クエリからtitleとurlをとってくる
         title = request.GET.get('title')
         url = request.GET.get('url')
+        #try:
+        #    user = request.session["session_user"]
+        #except:
+        #    user = User.objects.get(pk=1)
         try:
             user = request.session["session_user"]
         except:
-            user = User.objects.get(pk=1)
+            #TODO:増田
+            user = "増田"
         #bookmarkletなのでinitialをつける
-        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url, 'user':user}) })
+        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url}) })
     #POSTの処理はbookmark_addと同じ
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
+        #try:
+        #    user = User.objects.get(name=request.session["session_user"])
+        #except:
+        #    user = User.objects.get(pk=1)
         try:
-            user = User.objects.get(name=request.session["session_user"])
+            posted_user = request.session["session_user"]
         except:
-            user = User.objects.get(pk=1)
+            #TODO:増田
+            #posted_user = "増田"
+            posted_user = request.POST.get("user")
         url_instance= Url(title=form.cleaned_data['title'],
-                                user=user,
+                                user=posted_user,
                                 url=form.cleaned_data['url'],
                                )
         url_instance.save()

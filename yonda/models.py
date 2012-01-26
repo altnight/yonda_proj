@@ -16,8 +16,8 @@ class User(models.Model):
 class Url(models.Model):
     url = models.CharField(u"url", max_length=2048)
     title = models.CharField(u"title", max_length=2048)
-    user = models.ForeignKey(User, verbose_name=u'ユーザー')
-    #user = models.CharField(u"ユーザー", max_length=255, editable=False)
+    #user = models.ForeignKey(User, verbose_name=u'ユーザー')
+    user = models.CharField(u"ユーザー", max_length=255)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
     #yonda = models.IntegerField(u"読んだ", default=0)
 
