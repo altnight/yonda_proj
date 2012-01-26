@@ -3,6 +3,38 @@
 <html lang="ja">
 <title>{% block title %}{% endblock %}</title>
 	<meta charset="UTF-8">
+    <style type="text/css">
+    #header{
+      width: 800px;
+      height: auto;
+      margin: auto 0;
+      padding: 0;
+    }
+    #main{
+      width: 800px;
+      height: auto;
+      margin: auto 0;
+      padding: 0;
+    }
+    #footer{
+      width: 800px;
+      height: auto;
+      margin: auto 0;
+      padding: 0;
+    }
+    ul{
+      list-style-type: none;
+    }
+    .url_postform{
+      width: 500px;
+    }
+    .name_postform{
+      width: 200px;
+    }
+    .title_postform{
+      width: 300px;
+    }
+    </style>
 </head>
 <body>
 <div id="all">
@@ -10,8 +42,6 @@
     <div id='header'>
       <h1>Yonda?</h1>
       <p> FavでもLikeでもない、ただ単に読了したものを記録するサービスです</p>
-    </div>
-    <div>
       <ul>
     	  {% if display_user %}<li><a href="http://127.0.0.1:8000/user/{{ display_user.name }}"> {{ display_user.name }}</a>で登録する</li>{% endif %}
     	  {% if not display_user %}<li>匿名で登録する</li>{% endif %}
