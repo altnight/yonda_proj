@@ -108,12 +108,13 @@ def bookmarklet(request):
             #TODO:増田
             user = "増田"
         #bookmarkletなのでinitialをつける
-        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url}) })
+        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url, 'user':user}) })
     #POSTの処理はbookmark_addと同じ
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
+        #import pdb;pdb.set_trace()
         #try:
         #    user = User.objects.get(name=request.session["session_user"])
         #except:
