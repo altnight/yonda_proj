@@ -18,6 +18,7 @@ class Url(models.Model):
     title = models.CharField(u"title", max_length=2048)
     #user = models.ForeignKey(User, verbose_name=u'ユーザー')
     user = models.CharField(u"ユーザー", max_length=255)
+    count = models.IntegerField(u"回数", default=0)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
     #yonda = models.IntegerField(u"読んだ", default=0)
 

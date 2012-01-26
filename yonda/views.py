@@ -20,7 +20,6 @@ def index(request):
         form = UrlPostForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        #import pdb;pdb.set_trace()
         
         url = form.cleaned_data["url"]
         if "#!/" in url:
@@ -41,9 +40,14 @@ def index(request):
             for s in soup('title'):
                 souped_title = s.renderContents()
             decoded_title = souped_title.decode("utf-8")
+            #import pdb;pdb.set_trace()
+            url_count = Url.objects.filter(url=form.cleaned_data["url"]).filter(user=posted_user).count()
+            #if Url.objects.filter(user=posted_user).count():
+            url_count += 1
             url_instance = Url(url=form.cleaned_data["url"],
                                title=decoded_title,
-                               user=posted_user
+                               user=posted_user,
+                               count=url_count,
                                )
             url_instance.save()
         except:
