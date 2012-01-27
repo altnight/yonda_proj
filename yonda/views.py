@@ -3,6 +3,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic.simple import direct_to_template
+from django.contrib.csrf.middleware import csrf_exempt
 #from django.shortcuts import get_object_or_404
 #from django.core.mail import send_mail
 
@@ -78,6 +79,7 @@ def bookmarklet(request):
         Url.post_url(request, request.GET.get("url"), form.cleaned_data["title"], user)
         return HttpResponseRedirect(reverse('index'))
 
+@csrf_exempt
 def api(request):
     if request.method == "GET":
         raise
@@ -87,3 +89,4 @@ def api(request):
     if not user:
         user = "増田"
     Url.post_url(request, url, title, user)
+    return true
