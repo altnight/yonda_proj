@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}検索結果{% endblock %}
+{% block content %}
+<ul>
+  {% for obj in res.all %}
+    <li>{{ obj.results.title }}</li>
+    <li>{{ obj.results.url|urlize }}</li>
+    <li> <a href="{{ DOMAIN }}/user/{{ obj.user }}">{{ obj.results.user }}</a>が読んだかも</li>
+    <hr />
+  {% endfor %}
+</ul>
+{% endblock %}
