@@ -20,7 +20,7 @@ class Url(models.Model):
     title = models.CharField(u"title", max_length=1024)
     #user = models.ForeignKey(User, verbose_name=u'ユーザー')
     user = models.CharField(u"ユーザー", max_length=128)
-    count = models.IntegerField(u"回数", default=0)
+    count = models.IntegerField(u"回数", default=1)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
 
     def __unicode__(self):
@@ -32,9 +32,6 @@ class Url(models.Model):
     @classmethod
     def post_url(cls, url, user, title=None):
         deny_local_address(url)
-        url_count = cls.objects.filter(url=url).filter(user=user).count()
-        url_count += 1
-        #import pdb;pdb.set_trace()
         if not cls.objects.filter(url=url).filter(user=user).count():
             if not title:
                 title = get_url_title(url)
@@ -43,7 +40,6 @@ class Url(models.Model):
             url_instance = Url(url=url,
                                title=title,
                                user=user,
-                               count=url_count,
                                )
         else:
             url_instance = cls.objects.filter(url=url).get(user=user)
