@@ -46,6 +46,6 @@ class Url(models.Model):
                                count=url_count,
                                )
         else:
-            url_instance = cls.objects.get(url=url)
+            url_instance = cls.objects.filter(url=url).get(user=user)
             url_instance.count += 1
         url_instance.save()
