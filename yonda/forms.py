@@ -17,8 +17,8 @@ class UrlPostForm(forms.Form):
 class BookmalkletForm(forms.Form):
     title = forms.CharField(label=u"タイトル", required=True,
                           widget=forms.TextInput(attrs={"class":"title_postform"}))
-    url = forms.CharField(label=u"url", required=True, initial="http://",
-                          widget=forms.TextInput(attrs={"class":"url_postform"}))
+    #url = forms.CharField(label=u"url", required=True, initial="http://",
+    #                      widget=forms.TextInput(attrs={"class":"url_postform"}))
     user= forms.CharField(label=u"名前", required=True, initial="増田",
                           widget=forms.TextInput(attrs={"class":"name_postform"}))
      

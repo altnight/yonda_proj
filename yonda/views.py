@@ -112,7 +112,7 @@ def bookmarklet(request):
             #TODO:増田
             user = "増田"
         #bookmarkletなのでinitialをつける
-        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title,'url':url, 'user':user}) })
+        return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title, 'user':user}), 'url':url})
     #POSTの処理はbookmark_addと同じ
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
