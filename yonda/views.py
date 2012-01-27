@@ -32,7 +32,7 @@ def login(request):
         form = LoginForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        if not User.objects.filter(name=request.POST.get('name')).count():
+        if not User.objects.filter(name=form.cleaned_data["name"]).count():
             new_user = User(name=form.cleaned_data["name"])
             new_user.save()
         request.session['session_user'] = request.POST.get('name')

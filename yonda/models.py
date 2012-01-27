@@ -5,6 +5,15 @@ from yonda.tools import get_url_title, deny_local_address
 
 # Create your models here.
 
+class User(models.Model):
+    name = models.CharField(u"name", max_length=128)
+    ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'User'
 
 class Url(models.Model):
     url = models.CharField(u"url", max_length=1024)
@@ -29,9 +38,14 @@ class Url(models.Model):
         deny_local_address(url)
         url_count = cls.objects.filter(url=url).filter(user=post_user).count()
         url_count += 1
-        url_instance = Url(url=url,
-                           title=title,
-                           user=post_user,
-                           count=url_count,
-                           )
-        url_instance.save()
+        if not cls.objects.filter(url=url).filter(user=post_user).count():
+            url_instance = Url(url=url,
+                               title=title,
+                               user=post_user,
+                               count=url_count,
+                               )
+            url_instance.save()
+        else:
+            ins = cls.objects.get(url=url)
+            ins.count += 1
+            ins.save()
