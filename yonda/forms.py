@@ -12,9 +12,9 @@ class UrlPostForm(forms.Form):
         url = self.cleaned_data['url']
         if not re.match(r'^https?://', url):
             raise forms.ValidationError(u'httpかhttpsで初めてください')
-        if not re.match(r'^https?://192.168', url):
+        if re.match(r'^https?://192\.168', url):
             raise forms.ValidationError(u'プライベートアドレスはどうよ')
-        if not re.match(r'^https?://127.0', url):
+        if re.match(r'^https?://127\.0', url):
             raise forms.ValidationError(u'プライベートアドレスはどうよ')
         return url
 
@@ -26,15 +26,15 @@ class BookmalkletForm(forms.Form):
     user= forms.CharField(label=u"名前", required=True, initial="増田",
                           widget=forms.TextInput(attrs={"class":"name_postform"}))
      
-    def clean_url(self):
-        url = self.cleaned_data['url']
-        if not re.match(r'^https?://', url):
-            raise forms.ValidationError(u'httpかhttpsで初めてください')
-        if not re.match(r'^https?://192.168', url):
-            raise forms.ValidationError(u'プライベートアドレスはどうよ')
-        if not re.match(r'^https?://127.0', url):
-            raise forms.ValidationError(u'プライベートアドレスはどうよ')
-        return url
+    #def clean_url(self):
+    #    url = self.cleaned_data['url']
+    #    if not re.match(r'^https?://', url):
+    #        raise forms.ValidationError(u'httpかhttpsで初めてください')
+    #    if re.match(r'https?://192\.168', url):
+    #        raise forms.ValidationError(u'プライベートアドレスはどうよ')
+    #    if re.match(r'https?://127\.0', url):
+    #        raise forms.ValidationError(u'プライベートアドレスはどうよ')
+    #    return url
 
 class LoginForm(forms.Form):
     name = forms.CharField(label=u"名前", required=True, initial="増田",

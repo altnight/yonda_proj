@@ -3,6 +3,7 @@ from django.db import models
 
 from yonda.tools import get_url_title
 
+import re
 # Create your models here.
 
 class User(models.Model):
@@ -40,6 +41,10 @@ class Url(models.Model):
         if not title:
             title = get_url_title(url)
         if not title:
+            return
+        if re.match(r'https?://192\.168', url):
+            return
+        if re.match(r'https?://127\.0', url):
             return
         url_count = cls.objects.filter(url=url).filter(user=post_user).count()
         url_count += 1
