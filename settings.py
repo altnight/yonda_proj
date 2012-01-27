@@ -7,17 +7,17 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-DOMAIN = "http://127.0.0.1:8000"
+DOMAIN = "http://192.168.56.101:8000"
 MANAGERS = ADMINS
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': "/Users/altnight/yonda_proj/data.db",
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
+        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': "data",
+        'USER': 'altnight',                      # Not used with sqlite3.
+        'PASSWORD': '1234',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
