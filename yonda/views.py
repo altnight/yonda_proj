@@ -65,7 +65,6 @@ def bookmarklet(request):
             user = "増田"
         #bookmarkletなのでinitialをつける
         return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title, 'user':user}), 'url':url})
-    #POSTの処理はbookmark_addと同じ
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
@@ -78,3 +77,13 @@ def bookmarklet(request):
             user = request.POST.get("user")
         Url.post_url(request, request.GET.get("url"), form.cleaned_data["title"], user)
         return HttpResponseRedirect(reverse('index'))
+
+def api(request):
+    if request.method == "GET":
+        raise
+    user = request.POST.get("user")
+    title = request.POST.get("title")
+    url = request.POST.get("url")
+    if not user:
+        user = "増田"
+    Url.post_url(request, url, title, user)

@@ -13,5 +13,6 @@ urlpatterns = patterns('yonda.views',
     url(r'^timeline$', 'timeline', name='timeline'),
     url(r'^user/(?P<username>.*)$', "user_timeline", name="user_timeline"),
     url(r'^feed/(?P<feed_id>.*)$', "feed", name="feed"),
+    url(r'^api$', "api", name="api"),
 )
 
