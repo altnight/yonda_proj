@@ -68,7 +68,8 @@ def bookmarklet(request):
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
-        user = use_username_or_masuda(request)
+        #user = use_username_or_masuda(request)
+        user = form.cleaned_data["user"]
         Url.post_url(request.GET.get("url"), user, form.cleaned_data["title"])
         return HttpResponseRedirect(reverse('index'))
 
