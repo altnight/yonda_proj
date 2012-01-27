@@ -30,5 +30,5 @@ def use_username_or_masuda(request):
         user = request.session["session_user"]
     else:
         #TODO:増田
-        user = request.POST.get("user")
+        user = "増田"
     return user

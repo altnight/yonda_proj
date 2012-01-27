@@ -23,7 +23,8 @@ def index(request):
             return HttpResponseRedirect(reverse('index'))
         
         url = form.cleaned_data["url"]
-        Url.post_url(url)
+        user = use_username_or_masuda(request)
+        Url.post_url(url, None, user)
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):
@@ -81,7 +82,8 @@ def post_api(request):
     title = request.POST.get("title")
     url = request.POST.get("url")
 
-    user = use_username_or_masuda(request)
+    if not user:
+        user = use_username_or_masuda(request)
     Url.post_url(url, title, user)
     return true
 
