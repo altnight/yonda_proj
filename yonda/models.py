@@ -16,10 +16,10 @@ class User(models.Model):
         db_table = 'User'
 
 class Url(models.Model):
-    url = models.CharField(u"url", max_length=2048)
-    title = models.CharField(u"title", max_length=2048)
+    url = models.CharField(u"url", max_length=1024)
+    title = models.CharField(u"title", max_length=1024)
     #user = models.ForeignKey(User, verbose_name=u'ユーザー')
-    user = models.CharField(u"ユーザー", max_length=255)
+    user = models.CharField(u"ユーザー", max_length=128)
     count = models.IntegerField(u"回数", default=0)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
 
