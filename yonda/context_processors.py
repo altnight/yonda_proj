@@ -5,3 +5,4 @@ from django.utils.encoding import force_unicode, DjangoUnicodeDecodeError
 
 def domain(request):
     return {'DOMAIN':settings.DOMAIN}
+

@@ -30,3 +30,7 @@ class BookmalkletForm(forms.Form):
 class LoginForm(forms.Form):
     name = forms.CharField(label=u"名前", required=True, initial="増田",
                           widget=forms.TextInput(attrs={"class":"name_postform"}))
+
+class SearchForm(forms.Form):
+    title = forms.CharField(label=u"タイトルで検索する",
+                          widget=forms.TextInput(attrs={"class":"title_postform"}))

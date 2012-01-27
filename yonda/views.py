@@ -21,10 +21,8 @@ def index(request):
         form = UrlPostForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
-        
-        url = form.cleaned_data["url"]
         user = use_username_or_masuda(request)
-        Url.post_url(url, None, user)
+        Url.post_url(form.cleaned_data["url"], None, user)
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):
@@ -95,6 +93,13 @@ def url_count_api(request):
     return HttpResponse(count)
 
 def search(request):
-    s = solr.SolrConnection("http://localhost:8983/solr")
-    res = s.query(u"title:Google")
-    return direct_to_template(request,"search.html", {"res":res})
+    if request.method == "GET":
+        return direct_to_template(request, "search.html", {"form": SearchForm()})
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if not form.is_valid():
+            return HttpResponseRedirect(reverse("index"))
+        s = solr.SolrConnection("http://localhost:8983/solr")
+        query_sring = "title:%s" % form.cleaned_data["title"]
+        res = s.query(query_sring)
+        return direct_to_template(request,"search.html", {"res":res, 'form':SearchForm()})
