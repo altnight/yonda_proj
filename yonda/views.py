@@ -54,9 +54,7 @@ def user_timeline(request, username):
 
 def feed(request, feed_id):
     feed= Url.objects.filter(pk=feed_id)
-    feed_get = Url.objects.get(pk=feed_id)
-    #import pdb;pdb.set_trace()
-    users = Url.objects.filter(url=feed_get)
+    users = Url.objects.filter(url=Url.objects.get(pk=feed_id))
     return direct_to_template(request,"feed.html", {"feed":feed, "users":users})
 
 def bookmarklet(request):
