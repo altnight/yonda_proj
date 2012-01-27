@@ -2,6 +2,7 @@
 from BeautifulSoup import BeautifulSoup
 
 import urllib2
+import re
 
 def get_url_title(url):
     if "#!/" in url:
@@ -15,3 +16,9 @@ def get_url_title(url):
     except:
         title = ""
     return title
+
+def deny_local_address(url):
+    if re.match(r'https?://192\.168', url):
+        raise
+    if re.match(r'https?://127\.0', url):
+        raise

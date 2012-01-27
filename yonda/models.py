@@ -1,9 +1,8 @@
 #-*- coding:utf-8 -*-
 from django.db import models
 
-from yonda.tools import get_url_title
+from yonda.tools import get_url_title, deny_local_address
 
-import re
 # Create your models here.
 
 class User(models.Model):
@@ -42,10 +41,7 @@ class Url(models.Model):
             title = get_url_title(url)
         if not title:
             return
-        if re.match(r'https?://192\.168', url):
-            return
-        if re.match(r'https?://127\.0', url):
-            return
+        deny_local_address(url)
         url_count = cls.objects.filter(url=url).filter(user=post_user).count()
         url_count += 1
         url_instance = Url(url=url,
