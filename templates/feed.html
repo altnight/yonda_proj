@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}user_timeline{% endblock %}
+{% block title %}feed{% endblock %}
 {% block content %}
 <ul>
-  {% for obj in user_timeline.all %}
+  {% for obj in feed.all %}
     <li>{{ obj.title }}</li>
     <li>{{ obj.url|urlize }}</li>
     <li> <a href="{{ DOMAIN }}/user/{{ obj.user }}">{{ obj.user }}</a>さんが{{ obj.count }}回読んだかも</li>

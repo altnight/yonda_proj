@@ -49,6 +49,10 @@ def user_timeline(request, username):
     user_timeline = Url.objects.filter(user=username).order_by('-ctime')[:1000]
     return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
 
+def feed(request, feed_id):
+    feed= Url.objects.filter(pk=feed_id)
+    return direct_to_template(request,"feed.html", {"feed":feed})
+
 def bookmarklet(request):
     if request.method == "GET":
         #クエリからtitleとurlをとってくる

@@ -13,3 +13,5 @@ def user_session(request):
     return {
         'display_user': user,
     }
+def domain(request):
+    return settings.DOMAIN
