@@ -103,5 +103,4 @@ def url_count_api(request):
 def search(request):
     s = solr.SolrConnection("http://localhost:8983/solr")
     res = s.query(u"title:Google")
-    print res.results[0]["url"]
     return direct_to_template(request,"search.html", {"res":res})
