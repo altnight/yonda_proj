@@ -22,7 +22,7 @@ def index(request):
         if not form.is_valid():
             return HttpResponseRedirect(reverse('index'))
         user = use_username_or_masuda(request)
-        Url.post_url(form.cleaned_data["url"], None, user)
+        Url.post_url(form.cleaned_data["url"], user)
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):
@@ -69,7 +69,7 @@ def bookmarklet(request):
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
         user = use_username_or_masuda(request)
-        Url.post_url(request.GET.get("url"), form.cleaned_data["title"], user)
+        Url.post_url(request.GET.get("url"), user, form.cleaned_data["title"])
         return HttpResponseRedirect(reverse('index'))
 
 @csrf_exempt
@@ -82,7 +82,7 @@ def post_api(request):
 
     if not user:
         user = use_username_or_masuda(request)
-    Url.post_url(url, title, user)
+    Url.post_url(url, user, title)
     return true
 
 def url_count_api(request):
