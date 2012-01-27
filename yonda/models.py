@@ -22,6 +22,7 @@ class Url(models.Model):
     user = models.CharField(u"ユーザー", max_length=128)
     count = models.IntegerField(u"回数", default=1)
     ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
+    atime = models.DateTimeField(u'更新日時',auto_now=True, editable=False)
 
     def __unicode__(self):
         return self.url

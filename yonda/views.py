@@ -44,12 +44,12 @@ def logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 def timeline(request):
-    timeline = Url.objects.all().order_by('-ctime')[:1000]
+    timeline = Url.objects.all().order_by('-atime')[:1000]
     return direct_to_template(request, "timeline.html",{'timeline':timeline})
 
 def user_timeline(request, username):
     #user = User.objects.get(name=username)
-    user_timeline = Url.objects.filter(user=username).order_by('-ctime')[:1000]
+    user_timeline = Url.objects.filter(user=username).order_by('-atime')[:1000]
     return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
 
 def feed(request, feed_id):
