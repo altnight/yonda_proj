@@ -129,9 +129,13 @@ def bookmarklet(request):
             #TODO:増田
             #posted_user = "増田"
             posted_user = request.POST.get("user")
-        url_instance= Url(title=form.cleaned_data['title'],
-                                user=posted_user,
-                                url=form.cleaned_data['url'],
-                               )
+        url_count = Url.objects.filter(url=form.cleaned_data["url"]).filter(user=posted_user).count()
+        #if Url.objects.filter(user=posted_user).count():
+        url_count += 1
+        url_instance = Url(url=form.cleaned_data["url"],
+                           title=form.cleaned_data["title"],
+                           user=posted_user,
+                           count=url_count,
+                           )
         url_instance.save()
         return HttpResponseRedirect(reverse('index'))
