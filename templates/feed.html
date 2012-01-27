@@ -7,7 +7,11 @@
     <li>{{ obj.url|urlize }}</li>
     <li> <a href="{{ DOMAIN }}/user/{{ obj.user }}">{{ obj.user }}</a>さんが{{ obj.count }}回読んだかも</li>
     <li> <a href="{{ DOMAIN }}/feed/{{ obj.pk }}">{{ obj.ctime }}</a></li>
-    <hr />
   {% endfor %}
+  ---------------------------
+  {% for o in users.all %}
+    <li> <a href="{{ DOMAIN }}/user/{{ o.user }}">{{ o.user }}</a>さんが{{ o.count }}回読んだかも</li>
+  {% endfor %}
+    <hr />
 </ul>
 {% endblock %}
