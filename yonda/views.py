@@ -19,7 +19,7 @@ def index(request):
             return HttpResponseRedirect(reverse('index'))
         
         url = form.cleaned_data["url"]
-        Url.post_url(url)
+        Url.post_url(request, url)
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):

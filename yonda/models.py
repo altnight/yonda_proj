@@ -30,13 +30,13 @@ class Url(models.Model):
         db_table = 'Url'
 
     @classmethod
-    def post_url(cls, url):
-        #import pdb;pdb.set_trace()
+    def post_url(cls, request, url):
         if "#!/" in url:
             url = url.replace("#!/","")
-        try:
+        #import pdb;pdb.set_trace()
+        if not request.session["session_user"] == []:
             posted_user = request.session["session_user"]
-        except:
+        else:
             #TODO:増田
             posted_user = "増田"
         try:
