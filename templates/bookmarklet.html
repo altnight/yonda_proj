@@ -3,7 +3,7 @@
 {% block content %}
   <form method="POST" action="">
     {{ url }}<br/>
-    {{ form }}
+    {{ form.as_ul }}
     {% csrf_token %}
   <input type="SUBMIT" value='追加'/>
   </form>
