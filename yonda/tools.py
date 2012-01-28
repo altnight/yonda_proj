@@ -12,6 +12,6 @@ def get_url_title(url):
         for s in soup('title'):
             souped_title = s.renderContents()
         title = souped_title.decode("utf-8")
-        return title
     except:
-        print 'error'
+        title = ""
+    return title

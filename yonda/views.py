@@ -54,13 +54,9 @@ def bookmarklet(request):
         #クエリからtitleとurlをとってくる
         title = request.GET.get('title')
         url = request.GET.get('url')
-        #try:
-        #    user = request.session["session_user"]
-        #except:
-        #    user = User.objects.get(pk=1)
-        try:
+        if request.session.get("session_user"):
             user = request.session["session_user"]
-        except:
+        else:
             #TODO:増田
             user = "増田"
         #bookmarkletなのでinitialをつける
@@ -70,21 +66,15 @@ def bookmarklet(request):
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
-        #import pdb;pdb.set_trace()
-        #try:
-        #    user = User.objects.get(name=request.session["session_user"])
-        #except:
-        #    user = User.objects.get(pk=1)
-        try:
+
+        if request.session.get("session_user"):
             posted_user = request.session["session_user"]
-        except:
+        else:
             #TODO:増田
-            #posted_user = "増田"
             posted_user = request.POST.get("user")
+
         url_count = Url.objects.filter(url=request.GET.get("url")).filter(user=posted_user).count()
-        #if Url.objects.filter(user=posted_user).count():
         url_count += 1
-        print request.POST.get("url")
         url_instance = Url(url=request.GET.get("url"),
                            title=form.cleaned_data["title"],
                            user=posted_user,
