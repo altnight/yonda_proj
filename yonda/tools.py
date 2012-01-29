@@ -18,6 +18,8 @@ def get_url_title(url):
     return title
 
 def deny_local_address(url):
+    if not re.match(r'https?://', url):
+        raise
     if re.match(r'https?://192\.168', url):
         raise
     if re.match(r'https?://127\.0', url):
