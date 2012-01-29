@@ -80,7 +80,7 @@ def bookmarklet(request):
         return HttpResponseRedirect(reverse('index'))
 
 @csrf_exempt
-def api(request):
+def post_api(request):
     if request.method == "GET":
         raise
     user = request.POST.get("user")
