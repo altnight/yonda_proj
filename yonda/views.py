@@ -2,6 +2,7 @@
 # Create your views here.
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.views.generic.simple import direct_to_template
 from django.contrib.csrf.middleware import csrf_exempt
 #from django.shortcuts import get_object_or_404
@@ -90,3 +91,10 @@ def post_api(request):
         user = "増田"
     Url.post_url(request, url, title, user)
     return true
+
+def url_count_api(request):
+    if not request.method == "GET":
+        raise
+    url = request.GET.get("url")
+    count = Url.objects.filter(url=url).count()
+    return HttpResponse(count)
