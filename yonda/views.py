@@ -72,17 +72,9 @@ def bookmarklet(request):
             return HttpResponseRedirect(reverse('bookmarklet'))
 
         if request.session.get("session_user"):
-            posted_user = request.session["session_user"]
+            user = request.session["session_user"]
         else:
             #TODO:増田
-            posted_user = request.POST.get("user")
-
-        url_count = Url.objects.filter(url=request.GET.get("url")).filter(user=posted_user).count()
-        url_count += 1
-        url_instance = Url(url=request.GET.get("url"),
-                           title=form.cleaned_data["title"],
-                           user=posted_user,
-                           count=url_count,
-                           )
-        url_instance.save()
+            user = request.POST.get("user")
+        Url.post_url(request, request.GET.get("url"), form.cleaned_data["title"], user)
         return HttpResponseRedirect(reverse('index'))

@@ -30,21 +30,22 @@ class Url(models.Model):
         db_table = 'Url'
 
     @classmethod
-    def post_url(cls, request, url):
-        #import pdb;pdb.set_trace()
-        if request.session.get("session_user"):
-            posted_user = request.session["session_user"]
-        else:
-            #TODO:増田
-            posted_user = "増田"
-        title = get_url_title(url)
+    def post_url(cls, request, url, title=None, post_user=None):
+        if not post_user:
+            if request.session.get("session_user"):
+                post_user = request.session["session_user"]
+            else:
+                #TODO:増田
+                post_user = "増田"
+        if not title:
+            title = get_url_title(url)
         if not title:
             return
         url_count = cls.objects.filter(url=url).filter(user=posted_user).count()
         url_count += 1
         url_instance = Url(url=url,
                            title=title,
-                           user=posted_user,
+                           user=post_user,
                            count=url_count,
                            )
         url_instance.save()
