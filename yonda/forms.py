@@ -6,12 +6,16 @@ import re
 #from yonda.models import *
 
 class UrlPostForm(forms.Form):
-    url = forms.CharField(label=u"url", required=True, initial="http://",
+    url = forms.CharField(label=u"URL", required=True, initial="http://",
                           widget=forms.TextInput(attrs={"class":"url_postform"}))
     def clean_url(self):
         url = self.cleaned_data['url']
         if not re.match(r'^https?://', url):
             raise forms.ValidationError(u'httpかhttpsで初めてください')
+        if not re.match(r'^https?://192.168', url):
+            raise forms.ValidationError(u'プライベートアドレスはどうよ')
+        if not re.match(r'^https?://127.0', url):
+            raise forms.ValidationError(u'プライベートアドレスはどうよ')
         return url
 
 class BookmalkletForm(forms.Form):
@@ -26,6 +30,10 @@ class BookmalkletForm(forms.Form):
         url = self.cleaned_data['url']
         if not re.match(r'^https?://', url):
             raise forms.ValidationError(u'httpかhttpsで初めてください')
+        if not re.match(r'^https?://192.168', url):
+            raise forms.ValidationError(u'プライベートアドレスはどうよ')
+        if not re.match(r'^https?://127.0', url):
+            raise forms.ValidationError(u'プライベートアドレスはどうよ')
         return url
 
 class LoginForm(forms.Form):

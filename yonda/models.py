@@ -41,7 +41,7 @@ class Url(models.Model):
             title = get_url_title(url)
         if not title:
             return
-        url_count = cls.objects.filter(url=url).filter(user=posted_user).count()
+        url_count = cls.objects.filter(url=url).filter(user=post_user).count()
         url_count += 1
         url_instance = Url(url=url,
                            title=title,
