@@ -14,4 +14,4 @@ def user_session(request):
         'display_user': user,
     }
 def domain(request):
-    return settings.DOMAIN
+    return {'DOMAIN':settings.DOMAIN}
