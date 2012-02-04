@@ -5,15 +5,6 @@ from yonda.tools import get_url_title, deny_local_address
 
 # Create your models here.
 
-#class User(models.Model):
-#    name = models.CharField(u"名前", max_length=255)
-#    ctime = models.DateTimeField(u'登録日時',auto_now_add=True, editable=False)
-#
-#    def __unicode__(self):
-#        return self.name
-#
-#    class Meta:
-#        db_table = 'User'
 
 class Url(models.Model):
     url = models.CharField(u"url", max_length=1024)
