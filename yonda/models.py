@@ -21,13 +21,7 @@ class Url(models.Model):
         db_table = 'Url'
 
     @classmethod
-    def post_url(cls, request, url, title=None, post_user=None):
-        if not post_user:
-            if request.session.get("session_user"):
-                post_user = request.session["session_user"]
-            else:
-                #TODO:増田
-                post_user = "増田"
+    def post_url(cls, url, title=None, post_user=None):
         if not title:
             title = get_url_title(url)
         if not title:

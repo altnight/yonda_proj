@@ -10,6 +10,7 @@ from django.contrib.csrf.middleware import csrf_exempt
 
 from yonda.forms import *
 from yonda.models import *
+from yonda.tools import use_username_or_masuda
 
 import solr
 def index(request):
@@ -22,7 +23,7 @@ def index(request):
             return HttpResponseRedirect(reverse('index'))
         
         url = form.cleaned_data["url"]
-        Url.post_url(request, url)
+        Url.post_url(url)
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):
@@ -61,24 +62,15 @@ def bookmarklet(request):
         #クエリからtitleとurlをとってくる
         title = request.GET.get('title')
         url = request.GET.get('url')
-        if request.session.get("session_user"):
-            user = request.session["session_user"]
-        else:
-            #TODO:増田
-            user = "増田"
+        user = use_username_or_masuda(request)
         #bookmarkletなのでinitialをつける
         return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title, 'user':user}), 'url':url})
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
-
-        if request.session.get("session_user"):
-            user = request.session["session_user"]
-        else:
-            #TODO:増田
-            user = request.POST.get("user")
-        Url.post_url(request, request.GET.get("url"), form.cleaned_data["title"], user)
+        user = use_username_or_masuda(request)
+        Url.post_url(request.GET.get("url"), form.cleaned_data["title"], user)
         return HttpResponseRedirect(reverse('index'))
 
 @csrf_exempt
@@ -88,9 +80,9 @@ def post_api(request):
     user = request.POST.get("user")
     title = request.POST.get("title")
     url = request.POST.get("url")
-    if not user:
-        user = "増田"
-    Url.post_url(request, url, title, user)
+
+    user = use_username_or_masuda(request)
+    Url.post_url(url, title, user)
     return true
 
 def url_count_api(request):

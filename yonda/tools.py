@@ -24,3 +24,11 @@ def deny_local_address(url):
         raise
     if re.match(r'https?://127\.0', url):
         raise
+
+def use_username_or_masuda(request):
+    if request.session.get("session_user"):
+        user = request.session["session_user"]
+    else:
+        #TODO:増田
+        user = request.POST.get("user")
+    return user
