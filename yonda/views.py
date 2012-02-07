@@ -50,7 +50,8 @@ def timeline(request):
 def user_timeline(request, username):
     #user = User.objects.get(name=username)
     user_timeline = Url.objects.filter(user=username).order_by('-atime')[:1000]
-    return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline})
+    username = use_username_or_masuda(request)
+    return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline, "username":username})
 
 def feed(request, feed_id):
     feed= Url.objects.filter(pk=feed_id)

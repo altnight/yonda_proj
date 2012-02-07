@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}user_timeline{% endblock %}
+{% block title %} {{ username }}さんが読んだURL - #読んだ {% endblock %}
 {% block content %}
 <ul>
   {% for obj in user_timeline.all %}

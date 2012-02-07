@@ -22,6 +22,10 @@
       margin: auto 0;
       padding: 0;
     }
+    #footer li{
+        float: left;
+        margin: auto 10px;
+    }
     ul{
       list-style-type: none;
     }
@@ -40,7 +44,7 @@
 <div id="all">
   {% block header %}
     <div id='header'>
-      <h1>Yonda?</h1>
+      <h1>#読んだ</h1>
       <p> FavでもLikeでもない、ただ単に読了したものを記録するサービスです</p>
       <ul>
     	  {% if display_user %}<li><a href="{{ DOMAIN }}/user/{{ display_user.name }}">{{ display_user.name }}</a>で登録する</li>{% endif %}
@@ -50,8 +54,8 @@
       	<li><a href="{% url logout %}">匿名に戻る</a></li>
       	<li><a href="{% url timeline %}">最近読まれたURL</a></li>
       	<li><a href="{% url search %}">エゴサーチする</a></li>
-      	<li><a href="javascript:(function(){var%20title=document.title;var%20url=location.href;open('http://192.168.56.101:8000/bookmarklet?title='+encodeURIComponent(title)+'&url='+encodeURIComponent(url),'yonda', 'width=600, height=480')})();">Yondaに追加</a>(ブックマークレットです。ブックマークツールバーにドラッグしてください)</li>
-      </ul>
+      	<li onClick="alert('ブックマークです。ブックマークツールバーにドラッグしてくだしあ');return false;"><a href="javascript:(function(){var%20title=document.title;var%20url=location.href;open('http://192.168.56.101:8000/bookmarklet?title='+encodeURIComponent(title)+'&url='+encodeURIComponent(url),'yonda', 'width=600, height=480')})();">Yondaに追加</a>(ブックマークレットです。ブックマークツールバーにドラッグしてください)</li>
+      </ul> 
     </div>
   {% endblock %}
     <div id="main">
@@ -59,7 +63,13 @@
     </div>
   {% block hooter%}
   <div id='footer'>
-    つくったひと::<a href="http://twitter.com/altnight">@altnight</a>
+    <ul>
+      <li>つくったひと::<a href="http://twitter.com/altnight">@altnight</a></li>
+      <li>APIについて</li>
+      <li><a href="http://github.com/altnight/yonda_proj">ソースコード(github)</a></li>
+      <li>About</li>
+    </ul>
+
   </div>
   {% endblock %}
 </div>
