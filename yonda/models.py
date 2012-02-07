@@ -30,18 +30,18 @@ class Url(models.Model):
         db_table = 'Url'
 
     @classmethod
-    def post_url(cls, url, title=None, post_user=None):
-        if not title:
-            title = get_url_title(url)
-        if not title:
-            return
+    def post_url(cls, url, title=None, user):
         deny_local_address(url)
-        url_count = cls.objects.filter(url=url).filter(user=post_user).count()
+        url_count = cls.objects.filter(url=url).filter(user=user).count()
         url_count += 1
-        if not cls.objects.filter(url=url).filter(user=post_user).count():
+        if not cls.objects.filter(url=url).filter(user=user).count():
+            if not title:
+                title = get_url_title(url)
+            if not title:
+                return
             url_instance = Url(url=url,
                                title=title,
-                               user=post_user,
+                               user=user,
                                count=url_count,
                                )
             url_instance.save()
