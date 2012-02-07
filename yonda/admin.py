@@ -6,8 +6,8 @@ class UserAdmin(admin.ModelAdmin):
     readonly_fields = ('ctime',)
 
 class UrlAdmin(admin.ModelAdmin):
-    list_display = ('url', 'title', 'user', 'ctime',)
-    readonly_fields = ('ctime',)
+    list_display = ('url', 'title', 'user', 'ctime','atime',)
+    readonly_fields = ('ctime', 'atime')
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Url, UrlAdmin)
