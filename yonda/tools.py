@@ -5,6 +5,7 @@ import urllib2
 import re
 
 def get_url_title(url):
+    """BeautifulSoupでタイトルをとってくる"""
     if "#!/" in url:
         url = url.replace("#!/","")
     try:
@@ -18,6 +19,7 @@ def get_url_title(url):
     return title
 
 def deny_local_address(url):
+    """ローカルアドレスはraiseする"""
     if not re.match(r'https?://', url):
         raise
     if re.match(r'https?://192\.168', url):
@@ -26,6 +28,7 @@ def deny_local_address(url):
         raise
 
 def use_username_or_masuda(request):
+    """session_userか匿名(増田)を用いる"""
     if request.session.get("session_user"):
         user = request.session["session_user"]
     else:

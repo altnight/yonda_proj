@@ -32,6 +32,7 @@ class Url(models.Model):
 
     @classmethod
     def post_url(cls, url, user, title=None):
+        """URLをポストする共通メソッド"""
         deny_local_address(url)
         if not cls.objects.filter(url=url).filter(user=user).count():
             if not title:

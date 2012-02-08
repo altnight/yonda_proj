@@ -14,6 +14,7 @@ from yonda.tools import use_username_or_masuda
 
 import solr
 def index(request):
+    """トップページ"""
     #loginしてるとき
     if request.method == "GET":
         return direct_to_template(request, "index.html", {"form":UrlPostForm()})
@@ -26,6 +27,7 @@ def index(request):
         return HttpResponseRedirect(reverse('index'))
 
 def login(request):
+    """名前で登録する"""
     if request.method == "GET":
         return direct_to_template(request, 'login.html',{'form':LoginForm()})
     if request.method == "POST":
@@ -39,45 +41,49 @@ def login(request):
         return HttpResponseRedirect(reverse('index'))
 
 def logout(request):
+    """匿名に戻る"""
     if request.session.get('session_user'):
         del request.session['session_user']
     return HttpResponseRedirect(reverse('index'))
 
 def timeline(request):
+    """最近読んだURLのTimeline"""
+    #とりあえず1000件取得する。ページングしない
     timeline = Url.objects.all().order_by('-atime')[:1000]
     return direct_to_template(request, "timeline.html",{'timeline':timeline})
 
 def user_timeline(request, username):
-    #user = User.objects.get(name=username)
+    """ユーザーごとのTimeline"""
+    #とりあえず1000件取得する。ページングしない
     user_timeline = Url.objects.filter(user=username).order_by('-atime')[:1000]
     username = use_username_or_masuda(request)
     return direct_to_template(request,"user_timeline.html", {"user_timeline":user_timeline, "username":username})
 
 def feed(request, feed_id):
+    """パーマリンクごとのURL"""
     feed= Url.objects.filter(pk=feed_id)
     users = Url.objects.filter(url=Url.objects.get(pk=feed_id))
     return direct_to_template(request,"feed.html", {"feed":feed, "users":users})
 
 def bookmarklet(request):
+    """ブックマークレット"""
     if request.method == "GET":
-        #クエリからtitleとurlをとってくる
         title = request.GET.get('title')
         url = request.GET.get('url')
         user = use_username_or_masuda(request)
-        #bookmarkletなのでinitialをつける
         return direct_to_template(request, 'bookmarklet.html',{'form': BookmalkletForm(initial={'title':title, 'user':user}), 'url':url})
     if request.method == "POST":
         form = BookmalkletForm(request.POST)
         if not form.is_valid():
             return HttpResponseRedirect(reverse('bookmarklet'))
-        #user = use_username_or_masuda(request)
         user = form.cleaned_data["user"]
         Url.post_url(request.GET.get("url"), user, form.cleaned_data["title"])
-        #return HttpResponseRedirect(reverse('index'))
+        #一度bookmarklet_closeに誘導してからウィンドウを閉じる
         return direct_to_template(request, "bookmarklet_close.html",{})
 
 @csrf_exempt
 def post_api(request):
+    """URLをポストするAPI。POSTのみ"""
     if request.method == "GET":
         raise
     user = request.POST.get("user")
@@ -90,6 +96,7 @@ def post_api(request):
     return true
 
 def url_count_api(request):
+    """特定のURLに対して数を表示するAPI。GETのみ"""
     if not request.method == "GET":
         raise
     url = request.GET.get("url")
@@ -97,6 +104,7 @@ def url_count_api(request):
     return HttpResponse(count)
 
 def search(request):
+    """検索。エゴサーチしたい"""
     if request.method == "GET":
         return direct_to_template(request, "search.html", {"form": SearchForm()})
     if request.method == "POST":
@@ -107,6 +115,7 @@ def search(request):
             if not form.cleaned_data["url"]:
                 return HttpResponseRedirect(reverse("search"))
         s = solr.SolrConnection("http://localhost:8983/solr")
+        #URLとTitleがある場合はtitleを優先する
         if form.cleaned_data["url"]:
             query_sring = "url:%s" % form.cleaned_data["url"]
         if form.cleaned_data["title"]:
