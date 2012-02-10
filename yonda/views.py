@@ -101,8 +101,14 @@ def search(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
         if not form.is_valid():
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("search"))
+        if not form.cleaned_data["title"]:
+            if not form.cleaned_data["url"]:
+                return HttpResponseRedirect(reverse("search"))
         s = solr.SolrConnection("http://localhost:8983/solr")
-        query_sring = "title:%s" % form.cleaned_data["title"]
+        if form.cleaned_data["title"]:
+            query_sring = "title:%s" % form.cleaned_data["title"]
+        if form.cleaned_data["url"]:
+            query_sring = "url:%s" % form.cleaned_data["url"]
         res = s.query(query_sring)
         return direct_to_template(request,"search.html", {"res":res, 'form':SearchForm()})

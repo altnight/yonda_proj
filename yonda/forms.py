@@ -32,5 +32,7 @@ class LoginForm(forms.Form):
                           widget=forms.TextInput(attrs={"class":"name_postform"}))
 
 class SearchForm(forms.Form):
-    title = forms.CharField(label=u"タイトルで検索する",
+    title = forms.CharField(label=u"タイトルで検索する", required=False,
                           widget=forms.TextInput(attrs={"class":"title_postform"}))
+    url = forms.CharField(label=u"URLで検索する", required=False,
+                          widget=forms.TextInput(attrs={"class":"url_postform"}))

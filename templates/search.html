@@ -3,7 +3,7 @@
 {% block content %}
 <ul>
   <form name="yonda" method="POST" action="">
-  {{form}}
+  {{form.as_ul}}
   {% csrf_token %}
   <input type="SUBMIT" value="送信"/>
   </form>
