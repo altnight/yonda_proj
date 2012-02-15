@@ -81,6 +81,14 @@ def bookmarklet(request):
         #一度bookmarklet_closeに誘導してからウィンドウを閉じる
         return direct_to_template(request, "bookmarklet_close.html",{})
 
+def api(request):
+    """APIについて"""
+    return direct_to_template(request, "api.html", {})
+
+def about(request):
+    """おれについて"""
+    return direct_to_template(request, "about.html", {})
+
 @csrf_exempt
 def post_api(request):
     """URLをポストするAPI。POSTのみ"""
