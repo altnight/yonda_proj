@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}APIについて - #読んだ{% endblock %}
+{% block content %}
+<p>極めててきとうな実装のAPIです。なにかあったら言ってください</p>
+<p>
+URLを投稿するAPI。POSTでください。内容的にはGETでもいいかもしれないですけどとりあえずPOST専用にしました。あとUserは省略すると匿名になります。
+/api/post?user=USERNAME&title=TITLE&url=URL
+</p>
+<p>
+特定のURLに対して読まれた数を表示するAPI。GETでください
+/api/url_count?url=http://hogemoge.com/
+</p>
+{% endblock %}
