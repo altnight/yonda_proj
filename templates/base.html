@@ -54,7 +54,7 @@
       	<li><a href="{% url logout %}">匿名に戻る</a></li>
       	<li><a href="{% url timeline %}">最近読まれたURL</a></li>
       	<li><a href="{% url search %}">エゴサーチする</a></li>
-      	<li onClick="alert('ブックマークです。ブックマークツールバーにドラッグしてくだしあ');return false;"><a href="javascript:(function(){var%20title=document.title;var%20url=location.href;open('http://192.168.56.101:8000/bookmarklet?title='+encodeURIComponent(title)+'&url='+encodeURIComponent(url),'yonda', 'width=600, height=480')})();">#読んだに追加</a>(ブックマークレットです。ブックマークツールバーにドラッグしてください)</li>
+      	<li onClick="alert('ブックマークです。ブックマークツールバーにドラッグしてくだしあ');return false;"><a href="javascript:(function(){var%20title=document.title;var%20url=location.href;open('http://altnight.net/bookmarklet?title='+encodeURIComponent(title)+'&url='+encodeURIComponent(url),'yonda', 'width=600, height=480')})();">#読んだに追加</a>(ブックマークレットです。ブックマークツールバーにドラッグしてください)</li>
       </ul> 
     </div>
   {% endblock %}
